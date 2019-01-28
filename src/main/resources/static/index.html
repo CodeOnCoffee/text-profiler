@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sentence Profiler</title>
+
+    <script>
+        function profile() {
+
+          var xhttp = new XMLHttpRequest()
+          xhttp.onreadystatechange = function () {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+              let results = JSON.stringify(JSON.parse(xhttp.response), null, "\t")
+              document.getElementById("results").innerHTML = results;
+            }
+          }
+          xhttp.open('POST', '/api/analyze')
+          xhttp.setRequestHeader('Content-Type', 'text/plain')
+          xhttp.responseType = 'application/json'
+          xhttp.send(document.getElementById("paragraph").value)
+        }
+    </script>
+</head>
+<body>
+    <h2>Profile some text!</h2>
+    <textarea id="paragraph" style="width:400px;height:225px;"></textarea>
+    <br/>
+    <button onClick="profile()">Profile</button>
+
+    <h2>Profile:</h2>
+    <pre id="results"/>
+</body>
+</html>
